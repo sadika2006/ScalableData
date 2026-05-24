@@ -1,0 +1,63 @@
+-- a) Which suppliers are located in a country with a population greater than 30 Mio.? (8423
+
+select S.s_name as Name, N.n_name as Nation from public.Supplier S
+inner join public.nation N on N.n_nationkey = S.s_nationkey
+inner join mondial.country C on lower(N.n_name) = lower(C.name)
+WHERE 
+    C.Population > 30000000;
+;
+
+--select * from mondial.country;
+-- b) Let's assume that a supplier closes production at Christmas and does not deliver if more than 50% of the 
+-- country's population is Christian. Which suppliers do not deliver during Christmas? (4784
+
+
+select 
+    S.s_name as Supplier_Name,
+	C.name as Country, 
+	R.percentage, 
+	R.name as Religion,
+	N.n_name as Nation 
+	
+from public.Supplier S
+	
+inner join public.nation N on N.n_nationkey = S.s_nationkey
+inner join mondial.country C on lower(N.n_name) = lower(C.name)
+inner join mondial.religion R on C.code = R.country
+
+WHERE 
+    R.percentage > 50
+and R.name LIKE  '%Christian%';
+;
+
+
+select S.s_name as Supplier_Name,
+C.name as Country, R.percentage, R.name as Religion 
+from mondial.religion R
+inner join mondial.country C on C.code = R.country
+inner join public.nation N on lower(N.n_name) = lower(C.name)
+inner join public.Supplier S  on N.n_nationkey = S.s_nationkey
+
+where R.percentage > 50
+and R.name like '%Christian%'
+;
+
+--c) How many suppliers are located in a country with an unemployment rate above 30%? (1)
+
+select * from mondial.economy;
+select S.s_name  as Supplier_Name from public.supplier S
+INNER JOIN public.NATION N ON S.s_nationkey = N.n_nationkey
+INNER JOIN mondial.country C ON lower(N.n_name) = lower(C.name) 
+where 
+
+
+-- d) How many different parts are produced in the EU? (1 ) 79710
+SELECT COUNT(DISTINCT P.p_partkey) AS PartsProducedInEU
+FROM public.PART P
+INNER JOIN public.PARTSUPP PS ON P.p_partkey = PS.ps_partkey
+INNER JOIN public.SUPPLIER S ON PS.ps_suppkey = S.s_suppkey
+INNER JOIN public.NATION N ON S.s_nationkey = N.n_nationkey
+INNER JOIN mondial.country C ON lower(N.n_name) = lower(C.name)
+INNER JOIN mondial.isMember M ON C.code = M.country
+WHERE M.organization = 'EU'
+AND M.type = 'member';
