@@ -4,8 +4,8 @@ HW via software pgAdmin4
 
 **a) The name and population of all cities in descending order of population. [3460]**
 
-select name, population from City 
-order by population asc;
+   select name, population from City 
+        order by population asc;
 
  **b) All cities (name) that are located on both a river and a lake. [19]**
  
@@ -231,56 +231,26 @@ ORDER BY
 
     ShareOfInhabitants ASC;
 
-**l) All countries (name) that have more lakes than mountains, in ascending order of the number of lakes. 
-Only countries that have both lakes and mountains should be considered. [19**
+### SQL Query: Countries with more Lakes than Mountains
 
-
-Select  C.name as country ,count( DISTINCT M.mountain) as SumMountain , count( DISTINCT L.lake) as SumLake
-
-from Country C
-
-inner join Geo_mountain M on M.country = C.code
-
-inner join geo_lake L on L.country = C.code and L.country = M.country
-
-group by C.name
-
-having count( DISTINCT M.mountain) < count( DISTINCT L.lake)
-
-ORDER BY 
-    SumLake ASC;
-
-
-
+```sql
+-- l) All countries (name) that have more lakes than mountains, in ascending order of the number of lakes. 
+-- Only countries that have both lakes and mountains should be considered.
 
 SELECT 
-
     C.name AS Country, 
-	
-    COUNT(DISTINCT L.Lake) AS NumberOfLakes,
-	
+    COUNT(DISTINCT L.Lake) AS NumberOfLakes, 
     COUNT(DISTINCT M.Mountain) AS NumberOfMountains
-	
 FROM 
-
     Country C
-	
 INNER JOIN 
-
     Geo_mountain M ON M.country = C.code
-	
 INNER JOIN 
-
     Geo_lake L ON L.country = C.code
-	
 GROUP BY 
-
     C.name
-	
 HAVING 
-
     COUNT(DISTINCT L.Lake) > COUNT(DISTINCT M.Mountain)
-	
 ORDER BY 
     NumberOfLakes ASC;
 
