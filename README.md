@@ -2,13 +2,16 @@
 
 HW via software pgAdmin4
 
-**a) The name and population of all cities in descending order of population. [3460]**
-
+### SQL Query: name and population of all cities
+--a) The name and population of all cities in descending order of population. [3460]
+```sql
    select name, population from City 
         order by population asc;
 
- **b) All cities (name) that are located on both a river and a lake. [19]**
- 
+### SQL Query: cities located on both river & lake
+--b) All cities (name) that are located on both a river and a lake. [19]
+
+```sql 
 SELECT DISTINCT City, Country, Province
 
 FROM located
