@@ -1,12 +1,13 @@
 # ScalableData
 
+HW via software pgAdmin4
 
---a) The name and population of all cities in descending order of population. [3460]
+**a) The name and population of all cities in descending order of population. [3460]**
 
 select name, population from City 
 order by population asc;
 
- -- b) All cities (name) that are located on both a river and a lake. [19]
+ **b) All cities (name) that are located on both a river and a lake. [19]**
  
 SELECT DISTINCT City, Country, Province
 
@@ -18,7 +19,7 @@ WHERE River IS NOT NULL
 
 --select * from located;
 
--- c) Name and population of all German cities (country code: D) in descending order of population. [85]
+**c) Name and population of all German cities (country code: D) in descending order of population. [85]**
 
 select distinct C.name City, C.population from city C
 
@@ -26,7 +27,7 @@ where C.country= 'D'
 
 order by C.population desc;
 
--- d) All languages (name) spoken in member countries of the EU. [56]
+**d) All languages (name) spoken in member countries of the EU. [56]**
 
 SELECT distinct L.Name
 
@@ -40,8 +41,8 @@ WHERE M.Organization = 'EU' AND M.Type = 'member';
 
 
 
---e) All languages (name) spoken in member countries of the EU and in how many countries (of the EU) they 
--- are spoken, sorted in descending order by number of countries. [56]
+**e) All languages (name) spoken in member countries of the EU and in how many countries (of the EU) they 
+are spoken, sorted in descending order by number of countries. [56]**
 
 SELECT  L.Name Language, count(M.Country)
 FROM Language L
@@ -51,8 +52,8 @@ group by L.Name
 order by count(M.Country) desc ;
 
 
---f) Name of the capital, population and name of the country of all capitals in which more than 30% of the 
--- country's population lives, in descending order of their number of inhabitants. [33]
+**f) Name of the capital, population and name of the country of all capitals in which more than 30% of the 
+country's population lives, in descending order of their number of inhabitants. [33]**
 
 select distinct C.capital, C.population Country_pop, C.name Country, City.population City_pop
 from Country C
@@ -61,7 +62,7 @@ where 0.3*(C.population) < City.population
 order by City.population desc
 ;
 
--- g) All countries (name) with at least one mountain over 4,000 m high  [43]
+**g) All countries (name) with at least one mountain over 4,000 m high  [43]**
 select distinct C.name from country C
 inner join geo_mountain GM on C.code = GM.country 
 inner join mountain M on M.name = GM.mountain
@@ -86,8 +87,8 @@ FROM (
 
 
 
--- h) All countries (name) with at least one city, 
---which has more inhabitants than the capital of the country. [37]
+ **h) All countries (name) with at least one city, 
+which has more inhabitants than the capital of the country. [37]**
 SELECT DISTINCT C.Name
 FROM Country C
 JOIN City CityOther ON C.Code = CityOther.Country 
@@ -96,9 +97,9 @@ JOIN City CityCapital ON C.Capital = CityCapital.Name
                       AND C.Code = CityCapital.Country
 WHERE CityOther.Population > CityCapital.Population;
 
--- i) The names of all countries with cities having over one million inhabitants and 
---the respective total population of all cities with over one million inhabitants
--- of that country in order of this total population. [92]
+**i) The names of all countries with cities having over one million inhabitants and 
+the respective total population of all cities with over one million inhabitants
+of that country in order of this total population. [92]**
 
 Select Distinct C.name, --City.name, City.population
 (SELECT SUM(Population) 
@@ -110,7 +111,7 @@ where City.population > 1000000
 ORDER BY Total_Population DESC;
 
 
---j) All countries (name) bordering Germany and their total border length. [9  --solve
+**j) All countries (name) bordering Germany and their total border length. [9  --solve**
 
 
 ----fit
@@ -133,8 +134,8 @@ from (SELECT country1 AS CountryCode, country2 AS NeighborCountry
 
 
 
---k)The names of all countries whose share of inhabitants living in the country's cities with over
---a millioninhabitants is greater than 30%, sorted in ascending order by this share. [14]
+**k)The names of all countries whose share of inhabitants living in the country's cities with over
+a millioninhabitants is greater than 30%, sorted in ascending order by this share. [14]**
 
 SELECT 
     Country.Name AS CountryName,
@@ -152,8 +153,8 @@ HAVING
 ORDER BY 
     ShareOfInhabitants ASC;
 
---l) All countries (name) that have more lakes than mountains, in ascending order of the number of lakes. 
---Only countries that have both lakes and mountains should be considered. [19
+**l) All countries (name) that have more lakes than mountains, in ascending order of the number of lakes. 
+Only countries that have both lakes and mountains should be considered. [19**
 
 Select  C.name as country ,count( DISTINCT M.mountain) as SumMountain , count( DISTINCT L.lake) as SumLake
 from Country C
@@ -225,7 +226,8 @@ ORDER BY C.name;
 
 
 
---n) The city with the largest population and the country in which it is located. [1]
+**n) The city with the largest population and the country in which it is located. [1]**
+
 select 
 	city.name  as city, 
 	C.name as country, 
