@@ -1,28 +1,41 @@
 # ScalableData
 
 
---a) The name and population of all cities in descending order of population. [3460
-select name, population from City order by population asc;
+--a) The name and population of all cities in descending order of population. [3460]
+
+select name, population from City 
+order by population asc;
 
  -- b) All cities (name) that are located on both a river and a lake. [19]
+ 
 SELECT DISTINCT City, Country, Province
+
 FROM located
+
 WHERE River IS NOT NULL
+
   AND Lake IS NOT NULL;
 
 --select * from located;
 
 -- c) Name and population of all German cities (country code: D) in descending order of population. [85]
+
 select distinct C.name City, C.population from city C
+
 where C.country= 'D'
+
 order by C.population desc;
 
 -- d) All languages (name) spoken in member countries of the EU. [56]
 
 SELECT distinct L.Name
+
 FROM Language L
+
 --INNER JOIN Country C ON C.Code = L.Country
+
 inner JOIN isMember M ON  L.country = M.Country 
+
 WHERE M.Organization = 'EU' AND M.Type = 'member';
 
 
